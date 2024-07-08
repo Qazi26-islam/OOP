@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <?php
+        import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Hazard> hazards = new ArrayList<>();
+        ArrayList<Feedback> feedbacks = new ArrayList<>();
+        Admin admin = new Admin();
+        Scanner scanner = new Scanner(System.in);
+        
+        while (true) {
+            System.out.println("1. Record Hazard");
+            System.out.println("2. Submit Feedback");
+            System.out.println("3. Admin: Verify Feedback");
+            System.out.println("4. Admin: Update Feedback");
+            System.out.println("5. Exit");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+            
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter hazard type (or 'exit' to finish):");
+                    String type = scanner.nextLine();
+                    if (type.equalsIgnoreCase("exit")) {
+                        break;
+                    }
+                    
+                    System.out.println("Enter location:");
+                    String location = scanner.nextLine();
+                    
+                    System.out.println("Enter severity (1-10):");
+                    int severity = scanner.nextInt();
+                    scanner.nextLine(); // consume the newline
+                    
+                    hazards.add(new Hazard(type, location, severity));
+                    break;
+                case 2:
+                    System.out.println("Enter your feedback:");
+                    String message = scanner.nextLine();
+                    feedbacks.add(new Feedback(message, false));
+                    break;
+                case 3:
+                    admin.verifyFeedbacks(feedbacks);
+                    break;
+                case 4:
+                    admin.updateFeedback(feedbacks, scanner);
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+        
+        System.out.println("Hazards Recorded:");
+        for (Hazard hazard : hazards) {
+            System.out.println(hazard);
+        }
+    }
+}
+
+        ?>
+    </body>
+</html>
